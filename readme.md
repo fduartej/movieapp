@@ -61,3 +61,7 @@ dotnet ef database update
 
 ## auto generacion de la parte web de producto
 dotnet aspnet-codegenerator controller -name ProductoController -m Producto -dc movieappauth.Data.ApplicationDbContext --relativeFolderPath Controllers --useDefaultLayout --referenceScriptLibraries
+
+## instalando swagger lib
+
+dotnet add package Swashbuckle.AspNetCore --version 6.5.0
