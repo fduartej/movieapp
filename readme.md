@@ -58,3 +58,6 @@ dotnet ef database update
 dotnet ef migrations add PagoPedidoMigracion --context movieappauth.Data.ApplicationDbContext -o "C:\Users\fduarte\OneDrive - Inteligo Group\Code\netcore\usmp\20241\movieappauth\Data\Migrations" 
 
 dotnet ef database update
+
+## auto generacion de la parte web de producto
+dotnet aspnet-codegenerator controller -name ProductoController -m Producto -dc movieappauth.Data.ApplicationDbContext --relativeFolderPath Controllers --useDefaultLayout --referenceScriptLibraries
