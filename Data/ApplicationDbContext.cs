@@ -12,5 +12,8 @@ public class ApplicationDbContext : IdentityDbContext
     public DbSet<movieappauth.Models.Contacto> DataContacto {get; set; }
     public DbSet<movieappauth.Models.Producto> DataProducto {get; set; }
     public DbSet<movieappauth.Models.Proforma> DataItemCarrito {get; set; }
+    public DbSet<movieappauth.Models.Pago> DataPago {get; set; }
+    public DbSet<movieappauth.Models.Pedido> DataPedido {get; set; }
+    public DbSet<movieappauth.Models.DetallePedido> DataDetallePedido {get; set; }
 }
 
