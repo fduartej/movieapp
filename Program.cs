@@ -5,6 +5,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL;
 using Microsoft.OpenApi.Models;
 using movieappauth.Service;
 using movieappauth.Integration.jsonplaceholder;
+using movieappauth.Integration.currencyexchange;
 
 
 
@@ -30,6 +31,9 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<ProductoService, ProductoService>();
 
 builder.Services.AddScoped<JsonplaceholderApiIntegration, JsonplaceholderApiIntegration>();
+
+builder.Services.AddScoped<CurrencyExchangeApiIntegration, CurrencyExchangeApiIntegration>();
+
 
 builder.Services.AddSession(options =>
 {
