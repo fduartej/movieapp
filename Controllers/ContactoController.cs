@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using movieappauth.Models;
 using movieappauth.Data;
+using MLSentymentalAnalysis;
 
 namespace movieappauth.Controllers
 {
@@ -31,12 +32,60 @@ namespace movieappauth.Controllers
         public IActionResult EnviarMensaje(Contacto objcontato)
         {
             _logger.LogDebug("Ingreso a Enviar Mensaje");
+            
+            MLModelTextClassification.ModelInput sampleData = new MLModelTextClassification.ModelInput()
+            {
+                Comentario = objcontato.Message
+            };
+            
+            MLModelTextClassification.ModelOutput output = MLModelTextClassification.Predict(sampleData);
+  
+            //Console.WriteLine($"{output.Label}{output.PredictedLabel}");
+
+            //output.Score.ToList().ForEach(score => Console.WriteLine(score));
+
+            var sortedScoresWithLabel = MLModelTextClassification.PredictAllLabels(sampleData);
+            var scoreKeyFirst = sortedScoresWithLabel.ToList()[0].Key;
+            var scoreValueFirst = sortedScoresWithLabel.ToList()[0].Value;
+            var scoreKeySecond = sortedScoresWithLabel.ToList()[1].Key;
+            var scoreValueSecond = sortedScoresWithLabel.ToList()[1].Value;
+
+            if(scoreKeyFirst == "1")
+            {
+                if(scoreValueFirst > 0.5)
+                {
+                    objcontato.Category = "Positivo";
+                }
+                else
+                {
+                    objcontato.Category = "Negativo";
+                }
+            }else{
+                if(scoreValueFirst > 0.5)
+                {
+                    objcontato.Category = "Negativo";
+                }
+                else
+                {
+                    objcontato.Category = "Positivo";
+                }
+            }
+            
+            Console.WriteLine($"{scoreKeyFirst,-40}{scoreValueFirst,-20}");
+            Console.WriteLine($"{scoreKeySecond,-40}{scoreValueSecond,-20}");
+
+
+            /*foreach (var score in sortedScoresWithLabel)
+            {
+                Console.WriteLine($"{score.Key,-40}{score.Value,-20}");
+            }*/
+            
 
             //Se registran los datos del objeto a la base datos
-            _context.Add(objcontato);
-            _context.SaveChanges();
+            //_context.Add(objcontato);
+            //_context.SaveChanges();
 
-            ViewData["Message"] = "Se registro el contacto";
+            ViewData["Message"] = "Se registro el contacto" + objcontato.Category;
             return View("Index");
         }
 
