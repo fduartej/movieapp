@@ -82,8 +82,8 @@ namespace movieappauth.Controllers
             
 
             //Se registran los datos del objeto a la base datos
-            //_context.Add(objcontato);
-            //_context.SaveChanges();
+            _context.Add(objcontato);
+            _context.SaveChanges();
 
             ViewData["Message"] = "Se registro el contacto" + objcontato.Category;
             return View("Index");
